@@ -115,7 +115,8 @@ void Widget::thread_receiveLCDValue(int iVal)
 			else if (!bSleepOff)
 				{
 					args.clear();iCountdown = ui->spinBox->value();ui->lineEdit->clear();timer.restart();qi64MsecondsPassed = qi64Msec = 0;
-					sleepProcess->start("sleep.bat", args);
+					//sleepProcess->start("sleep.bat", args);
+					args << "powrprof.dll" << ",SetSuspendState" << "0,1,0";sleepProcess->start("rundll32.exe", args);
 				}
 		}
 	}
@@ -147,12 +148,11 @@ void Widget::keyPressEvent(QKeyEvent *event)
 		iCountdown = ui->spinBox->value();ui->lineEdit->clear();timer.restart();qi64MsecondsPassed = qi64Msec = 0;
 	}
 	if (ui->exitButton->hasFocus() && ( key == Qt::Key_Enter || Qt::Key_Return ))
-		emit ui->exitButton->clicked();//ui->lineEdit->setText("Bill");
+		emit ui->exitButton->clicked();
 }
 
 void Widget::keyReleaseEvent(QKeyEvent *event)
 {
-	//if (event->key() == key)
 	key = 0;
 	iCountdown = ui->spinBox->value();ui->lineEdit->clear();timer.restart();qi64MsecondsPassed = qi64Msec = 0;
 }
